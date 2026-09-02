@@ -1,12 +1,738 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-<title>Page Title</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice-Activated Electrical Device Control System</title>
+  <style>
+    :root {
+      --primary: #0f6fff;
+      --primary-dark: #0a4db4;
+      --primary-soft: #eaf3ff;
+      --secondary: #f4f8ff;
+      --text: #1b2430;
+      --muted: #5d6b82;
+      --line: #dfe9f8;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(15, 111, 255, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #f6faff 0%, #eef5ff 100%);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: 0.03em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, #68a5ff 100%);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: var(--white);
+      box-shadow: 0 12px 26px rgba(15, 111, 255, 0.25);
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.08;
+      margin: 18px 0 18px;
+      letter-spacing: -0.04em;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #5fa0ff 100%);
+      color: var(--white);
+      box-shadow: 0 18px 35px rgba(15, 111, 255, 0.22);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary-dark);
+      border: 1px solid var(--line);
+    }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 120px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hero-visual {
+      background: linear-gradient(145deg, #dfefff 0%, #ffffff 100%);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .mini-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      background: #19c37d;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px rgba(25, 195, 125, 0.14);
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .signal-box {
+      display: grid;
+      gap: 12px;
+    }
+
+    .signal-bar {
+      height: 12px;
+      background: linear-gradient(90deg, #dfeafb 0%, #bcd4ff 40%, #6aa7ff 100%);
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signal-bar::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 68%;
+      height: 100%;
+      background: linear-gradient(90deg, #0f6fff 0%, #4c95ff 100%);
+      border-radius: inherit;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--secondary);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .feature-item .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary) 0%, #9dc0ff 100%);
+      color: var(--white);
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      padding: 92px 0;
+    }
+
+    .section.alt {
+      background: rgba(255, 255, 255, 0.6);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 42px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.04em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px 24px;
+      box-shadow: 0 12px 28px rgba(19, 54, 93, 0.04);
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      background: linear-gradient(135deg, var(--primary) 0%, #85b4ff 100%);
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .info-box {
+      background: linear-gradient(145deg, #ffffff 0%, #edf5ff 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--muted);
+    }
+
+    .check {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .image-card {
+      min-height: 360px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, #dfeefe 0%, #bfd8ff 100%);
+      border: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .image-card::before,
+    .image-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(15, 111, 255, 0.15);
+    }
+
+    .image-card::before {
+      inset: 28px 26px 120px 26px;
+      transform: rotate(-8deg);
+    }
+
+    .image-card::after {
+      inset: 120px 46px 32px 46px;
+      transform: rotate(8deg);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    .project-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .project-meta .meta-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      padding: 18px 16px;
+    }
+
+    .meta-box small {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-box strong {
+      font-size: 1.05rem;
+    }
+
+    footer {
+      background: #0c1e38;
+      color: rgba(255, 255, 255, 0.82);
+      padding: 36px 0 22px;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-brand {
+      max-width: 440px;
+    }
+
+    .footer-brand h3 {
+      margin: 0 0 8px;
+      color: var(--white);
+      font-size: 1.35rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .copyright {
+      padding-top: 18px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .two-column,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 18px 0;
+      }
+
+      .nav-links {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .hero {
+        padding-top: 52px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .section {
+        padding: 72px 0;
+      }
+
+      .project-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <span>Smart Voice System</span>
+      </div>
 
-<h1>Voice-activated electrical device control system</h1>
-<p>web1.</p>
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#details">Details</a>
+        <a href="#contact">Contact</a>
+      </nav>
 
+      <a class="nav-cta" href="#details">Explore</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Project Showcase</span>
+          <h1>Voice-Activated Electrical Device Control System</h1>
+          <p class="lead">
+            A smart solution that allows electrical devices to be controlled using voice commands,
+            improving convenience, accessibility, and efficiency in everyday life.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#features" class="btn btn-primary">View Features</a>
+            <a href="#overview" class="btn btn-secondary">About Project</a>
+          </div>
+
+          <div class="metrics">
+            <div class="metric">
+              <strong>AI</strong>
+              <span>Voice control</span>
+            </div>
+            <div class="metric">
+              <strong>Smart</strong>
+              <span>Automation</span>
+            </div>
+            <div class="metric">
+              <strong>Safe</strong>
+              <span>Energy use</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Project highlight panel">
+          <div class="panel">
+            <div class="mini-header">
+              <span>System Status</span>
+              <span><i class="status-dot"></i>Online</span>
+            </div>
+
+            <div class="signal-box">
+              <div class="signal-bar"></div>
+              <div class="signal-bar" style="width: 82%;"></div>
+              <div class="signal-bar" style="width: 90%;"></div>
+            </div>
+
+            <div class="feature-list">
+              <div class="feature-item"><span class="icon">✓</span> Voice command detection</div>
+              <div class="feature-item"><span class="icon">⚡</span> Device switching control</div>
+              <div class="feature-item"><span class="icon">📡</span> Efficient smart response</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Overview</span>
+          <h2>Project vision and purpose</h2>
+          <p>
+            This project focuses on developing a practical smart control system that connects voice recognition with electrical appliance operation.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Main Goal</h3>
+            <p>To create a convenient and intelligent control system that turns spoken commands into real device actions.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">💡</div>
+            <h3>Innovation</h3>
+            <p>Integrates sensor-based technology and automation concepts in a modern, user-friendly design.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🏠</div>
+            <h3>Application</h3>
+            <p>Suitable for homes, educational spaces, and industrial environments where automation improves efficiency.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="features">
+      <div class="container two-column">
+        <div class="info-box">
+          <h3>System highlights</h3>
+          <div class="info-list">
+            <div class="info-item">
+              <span class="check">✓</span>
+              <span>Detects voice signals for controlling electrical devices quickly and accurately.</span>
+            </div>
+            <div class="info-item">
+              <span class="check">✓</span>
+              <span>Minimizes manual operation and improves accessibility for users in daily tasks.</span>
+            </div>
+            <div class="info-item">
+              <span class="check">✓</span>
+              <span>Supports smart environment design with efficient and responsive device control.</span>
+            </div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-box">
+              <small>Created by</small>
+              <strong>นาย ฌานปกรณ์ อรุณอร่ามเรือง</strong>
+            </div>
+            <div class="meta-box">
+              <small>Department</small>
+              <strong>ช่างเทคนิคคอมพิวเตอร์</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="image-card" aria-label="Project illustration"></div>
+      </div>
+    </section>
+
+    <section class="section" id="details">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Project Details</span>
+          <h2>Academic information</h2>
+          <p>
+            This work was prepared as part of a practical assignment in the subject of foundational sensors in industrial work.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-icon">📘</div>
+            <h3>Course</h3>
+            <p>20105-2022 พื้นฐานเซนเซอร์ในงานอุตสาหกรรม</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🎓</div>
+            <h3>Academic Level</h3>
+            <p>ระดับชั้น ปวช.2</p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🏫</div>
+            <h3>Institution</h3>
+            <p>วิทยาลัยเทคนิคตรัง</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <h3>Smart Voice System</h3>
+        <p>
+          A modern prototype concept illustrating how voice commands can improve everyday control of electrical equipment.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#overview">Overview</a>
+        <a href="#features">Features</a>
+        <a href="#details">Details</a>
+      </div>
+    </div>
+
+    <div class="container copyright">
+      © 2026 Voice-Activated Electrical Device Control System. All rights reserved.
+    </div>
+  </footer>
 </body>
 </html>
+
